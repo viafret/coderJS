@@ -72,7 +72,7 @@ const aCant = [0, 0, 0]; //array de cantidades seleccionadas de cada accesorio A
 
 let accesoriosAgregados = []; //array de accesorios a comprar para armar lista en HTML
 
-//funcion para armar lista de Accesorios en HTML
+//funcion para armar lista de Accesorios disponibles en HTML
 function armarListaAcce() {
   let lista = document.getElementById("listaAccesorios");
   for (const accesorio of accesoriosDisp) {
@@ -111,11 +111,17 @@ class compra {
   }
 }
 
-//*Función para el ingreso del producto a adquirir
+//evento del boton agregr producto
+let botAgregaProd = document.getElementById("addProducto");
+botAgregaProd.addEventListener("click", seleccion);
+
+//Función para el ingreso del producto a adquirir
 function seleccion() {
-  let _producto = prompt(
+  /*let _producto = prompt(
     "Escriba el producto que desea adquirir: ALACENA, RACKTV, PLACARD"
-  );
+  );*/
+  let _producto = document.getElementById("producto").value;
+
   if (
     _producto == "ALACENA" ||
     _producto == "RACKTV" ||
