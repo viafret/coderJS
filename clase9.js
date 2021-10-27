@@ -116,10 +116,11 @@ let botAgregaProd = document.getElementById("addProducto");
 botAgregaProd.addEventListener("click", seleccion);
 
 //Función para el ingreso del producto a adquirir
-function seleccion() {
+function seleccion(e) {
   /*let _producto = prompt(
     "Escriba el producto que desea adquirir: ALACENA, RACKTV, PLACARD"
   );*/
+  e.preventDefault();
   let _producto = document.getElementById("producto").value;
 
   if (
@@ -128,6 +129,7 @@ function seleccion() {
     _producto == "PLACARD"
   ) {
     console.log("Ha seleCcionado el producto: " + _producto);
+    validacion(_producto);
     return _producto; //*Retorna el producto si la seleección es válida
   } else {
     return (_producto = 0); //*Retorna vacío se la selección no es válida
@@ -141,14 +143,17 @@ function validacion(_prodIngresa) {
     //Se utilizan los métodos de clase "mueble"
     mueble1.mostrarPrec();
     mueble1.mostrarAcc();
+    cantidad(1); //se llama a la función para definir cantidades
   } else if (_prodIngresa == "RACKTV") {
     //Se utilizan los métodos de clase "mueble"
     mueble2.mostrarPrec();
     mueble2.mostrarAcc();
+    cantidad(1); //se llama a la función para definir cantidades
   } else if (_prodIngresa == "PLACARD") {
     //Se utilizan los métodos de clase "mueble"
     mueble3.mostrarPrec();
     mueble3.mostrarAcc();
+    cantidad(1); //se llama a la función para definir cantidades
   } else {
     return (valido = ""); //*Retorna la variable global valido vacía.
   }
@@ -158,14 +163,15 @@ function validacion(_prodIngresa) {
 function cantidad(_valido) {
   if (_valido != "") {
     //*Si el prodcuto es válido se procede a la selección de cantidades
-    cantProd = parseInt(
+    /*cantProd = parseInt(
       prompt("Ingrese la cantidad a comprar (máximo 5 unidades): ") //*se alamcena la cantidad en la variale global
-    );
-    if (cantProd <= 5 && cantProd > 0) {
-      alert("Cantidad de unidades seleccionadas: " + cantProd);
+    );*/
+    let _cantProducto = parseInt(document.getElementById("cantProducto").value);
+    if (_cantProducto <= 5 && _cantProducto > 0) {
+      alert("Cantidad de unidades seleccionadas: " + _cantProducto);
     } else {
       alert("La cantidad ingresada es incorrecta");
-      return (cantProd = 0);
+      return (_cantProducto = 0);
     }
   } else {
     alert("El producto ingresado no existe"); //*Se responde si el producto no es válido
@@ -307,7 +313,7 @@ function costoTotal(_producto) {
 //*Ejecución del programa
 armarListaProd();
 armarListaAcce();
-validacion((producto = seleccion()));
-cantidad(valido);
-definAcc(cantProd);
-costoTotal(producto);
+//validacion((producto = seleccion()));
+//cantidad(valido);
+//definAcc(cantProd);
+//costoTotal(producto);
