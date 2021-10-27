@@ -43,10 +43,10 @@ function armarListaProd() {
 }
 
 //funcion para armar lista de Productos agregados para compra en el HTML
-function listaProdAgregados() {
+function listaProdAgregados(_producto) {
   let agregado = document.getElementById("productosAgregados");
   let texto = document.createElement("div");
-  texto.innerHTML = `<h3>PRODUCTOS AGREGADOS!</H3> <p class="lista1"> ${producto}</p>`;
+  texto.innerHTML = `<h3>PRODUCTOS AGREGADOS!</H3> <p class="lista1"> ${_producto}</p>`;
   agregado.appendChild(texto);
 }
 
@@ -144,16 +144,19 @@ function validacion(_prodIngresa) {
     mueble1.mostrarPrec();
     mueble1.mostrarAcc();
     cantidad(1); //se llama a la función para definir cantidades
+    listaProdAgregados(_prodIngresa); //función para mostrar en HTML
   } else if (_prodIngresa == "RACKTV") {
     //Se utilizan los métodos de clase "mueble"
     mueble2.mostrarPrec();
     mueble2.mostrarAcc();
     cantidad(1); //se llama a la función para definir cantidades
+    listaProdAgregados(_prodIngresa);
   } else if (_prodIngresa == "PLACARD") {
     //Se utilizan los métodos de clase "mueble"
     mueble3.mostrarPrec();
     mueble3.mostrarAcc();
     cantidad(1); //se llama a la función para definir cantidades
+    listaProdAgregados(_prodIngresa);
   } else {
     return (valido = ""); //*Retorna la variable global valido vacía.
   }
