@@ -37,8 +37,14 @@ function armarListaProd() {
   let lista = document.getElementById("listaProductos");
   for (const muebles of mueblesDisp) {
     let texto = document.createElement("li");
+    let boton = document.createElement("a");
     texto.innerHTML = `${muebles.nombre}     Valor: $ ${muebles.precio}`;
+    boton.innerHTML = `Agregar`;
+    boton.href = `#`;
+    boton.className = `lista__productos--botonAgregar`;
     lista.appendChild(texto);
+    lista.appendChild(boton);
+    console.log(boton);
   }
 }
 

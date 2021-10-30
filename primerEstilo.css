@@ -92,3 +92,7 @@ a {
   font-family: roboto;
   font-size: 20px;
 }
+
+.lista__productos--botonAgregar {
+  color: rgb(19, 199, 139);
+}
