@@ -43,7 +43,7 @@ function armarListaProd() {
     boton.href = `#`;
     boton.className = `lista__productos--botonAgregar`;
     lista.appendChild(texto);
-    lista.appendChild(boton);
+    texto.appendChild(boton);
     console.log(boton);
   }
 }
@@ -83,8 +83,13 @@ function armarListaAcce() {
   let lista = document.getElementById("listaAccesorios");
   for (const accesorio of accesoriosDisp) {
     let texto = document.createElement("li");
+    let boton = document.createElement("a");
     texto.innerHTML = `${accesorio.id} - ${accesorio.nombre} Color: ${accesorio.color} Valor: $ ${accesorio.precio}`;
+    boton.innerHTML = `Agregar`;
+    boton.href = `#`;
+    boton.className = `lista__productos--botonAgregar`;
     lista.appendChild(texto);
+    texto.appendChild(boton);
   }
 }
 
