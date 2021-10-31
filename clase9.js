@@ -36,14 +36,17 @@ console.log(mueblesDisp);
 function armarListaProd() {
   let lista = document.getElementById("listaProductos");
   for (const muebles of mueblesDisp) {
-    let texto = document.createElement("li");
+    let texto1 = document.createElement("li");
+    let texto2 = document.createElement("p");
     let boton = document.createElement("a");
-    texto.innerHTML = `${muebles.nombre}     Valor: $ ${muebles.precio}`;
-    boton.innerHTML = `Agregar`;
+    texto1.innerHTML = `${muebles.nombre}`;
+    texto2.innerHTML = `Valor: $  ${muebles.precio}`;
+    boton.innerHTML = `<br> Agregar`;
     boton.href = `#`;
     boton.className = `lista__productos--botonAgregar`;
-    lista.appendChild(texto);
-    texto.appendChild(boton);
+    lista.appendChild(texto1);
+    texto1.appendChild(texto2);
+    texto1.appendChild(boton);
     console.log(boton);
   }
 }
@@ -82,14 +85,17 @@ let accesoriosAgregados = []; //array de accesorios a comprar para armar lista e
 function armarListaAcce() {
   let lista = document.getElementById("listaAccesorios");
   for (const accesorio of accesoriosDisp) {
-    let texto = document.createElement("li");
+    let texto1 = document.createElement("li");
+    let texto2 = document.createElement("p");
     let boton = document.createElement("a");
-    texto.innerHTML = `${accesorio.id} - ${accesorio.nombre} Color: ${accesorio.color} Valor: $ ${accesorio.precio}`;
+    texto1.innerHTML = `${accesorio.nombre}`;
+    texto2.innerHTML = `Color: ${accesorio.color} Valor: $ ${accesorio.precio}`;
     boton.innerHTML = `Agregar`;
     boton.href = `#`;
-    boton.className = `lista__productos--botonAgregar`;
-    lista.appendChild(texto);
-    texto.appendChild(boton);
+    boton.className = `lista__accesorios--botonAgregar`;
+    lista.appendChild(texto1);
+    texto1.appendChild(texto2);
+    texto1.appendChild(boton);
   }
 }
 
@@ -122,19 +128,46 @@ class compra {
   }
 }
 
+armarListaProd();
+armarListaAcce();
+
 //evento del boton agregr producto
-let botAgregaProd = document.getElementById("addProducto");
-botAgregaProd.addEventListener("click", seleccion);
+//let botAgregaProd = document.getElementById("addProducto");
+let botAgregaProd = document.querySelectorAll(
+  ".lista__productos--botonAgregar"
+);
+
+//evento del boton agregar accesorio
+let botAgregaAcces = document.querySelectorAll(
+  ".lista__accesorios--botonAgregar"
+);
+
+//agregar eventos al link agregar productos
+for (let boton of botAgregaProd) {
+  boton.addEventListener("click", seleccion);
+}
+
+//agregar eventos al link agregar accesorioss
+for (let boton of botAgregaAcces) {
+  boton.addEventListener("click", definAcc);
+}
 
 //Función para el ingreso del producto a adquirir
 function seleccion(e) {
   /*let _producto = prompt(
     "Escriba el producto que desea adquirir: ALACENA, RACKTV, PLACARD"
   );*/
-  e.preventDefault();
-  let _producto = document.getElementById("producto").value;
+  //e.preventDefault();
+  let hijo = e.target;
+  let padre = hijo.parentNode;
+  console.log(hijo);
+  console.log(padre);
 
-  if (
+  //let _producto = document.getElementById("producto").value;
+  let _producto = padre.firstChild.textContent;
+  listaProdAgregados(_producto);
+
+  /*if (
     _producto == "ALACENA" ||
     _producto == "RACKTV" ||
     _producto == "PLACARD"
@@ -144,7 +177,7 @@ function seleccion(e) {
     return _producto; //*Retorna el producto si la seleección es válida
   } else {
     return (_producto = 0); //*Retorna vacío se la selección no es válida
-  }
+  }*/
 }
 
 //*Función para validar y mostrar el valor del producto
@@ -194,53 +227,59 @@ function cantidad(_valido) {
 }
 
 //*Función para ingresar accesorios
-function definAcc(_cantProd) {
-  //*Se recibe la cantidad de unidades
-  if (_cantProd != 0) {
-    //*Si el producto fue validad y la cantidad no es cero se procede con los accesorios
-    let agregaAcc = prompt("Desea agregar un accesorio? Escriba S ó N");
+function definAcc(e) {
+  //Se recibe la cantidad de unidades
+  //if (_cantProd != 0) {
+  //Si el producto fue validad y la cantidad no es cero se procede con los accesorios
+  let hijo = e.target;
+  let padre = hijo.parentNode;
+  console.log(hijo);
+  console.log(padre);
 
-    if (agregaAcc == "S") {
-      while (agregaAcc == "S") {
-        //*bucle para el ingreso de aacesorios
-        let _tipoAcce = prompt("Que accesorio desea agregar? Escriba A, B o C");
-        if (_tipoAcce == "A") {
-          console.log("Ha seleccionado el accesorio A");
-          aCant[0] = aCant[0] + 1; //suma cantidad
-          accesoriosAgregados.push(accesorio1); //suma al array
-          agregaAcc = prompt("Desea agregar otro accesorio? Escriba S ó N");
-        } else if (_tipoAcce == "B") {
-          console.log("Ha seleccionado el accesorio B");
-          aCant[1] = aCant[1] + 1;
-          accesoriosAgregados.push(accesorio2);
-          agregaAcc = prompt("Desea agregar otro accesorio? Escriba S ó N");
-        } else if (_tipoAcce == "C") {
-          console.log("Ha seleccionado el accesorio C");
-          aCant[2] = aCant[2] + 1;
-          accesoriosAgregados.push(accesorio3);
-          agregaAcc = prompt("Desea agregar otro accesorio? Escriba S ó N");
-        } else {
-          alert("Entrada inválida"); //*El accesorio seleccionado no existe
-          console.log("Selección de accesorio invalida");
-          agregaAcc = ""; //*fuerza la salida del bucle al ingreso de opción incorrecta
-        }
-      }
-      tipoAcce(aCant); //determina los tipos de accesorios definidos
-      listaAcceAgregados(); //muestra accesorios seleccionados en HTML
-    } else if (agregaAcc == "N") {
-      //*Si no se desea agregar accesorios
-      alert("No agregó accesorios!");
-      console.log("No agrega accesorios");
-    }
-    //Si se ingresa una opción incorrecta
-    else {
-      alert("Opción incorrecta, no agrega accesorios!"); //*Si la respuesta no es S o N
-    }
+  //let agregaAcc = prompt("Desea agregar un accesorio? Escriba S ó N");
+  //   if (agregaAcc == "S") {
+  //     while (agregaAcc == "S") {
+  //*bucle para el ingreso de aacesorios
+  //let _tipoAcce = prompt("Que accesorio desea agregar? Escriba A, B o C");
+
+  let _tipoAcce = padre.firstChild.textContent;
+  if (_tipoAcce == "Puerta") {
+    console.log("Ha seleccionado el accesorio A");
+    aCant[0] = aCant[0] + 1; //suma cantidad
+    accesoriosAgregados.push(accesorio1); //suma al array
+    //agregaAcc = prompt("Desea agregar otro accesorio? Escriba S ó N");
+  } else if (_tipoAcce == "Estante") {
+    console.log("Ha seleccionado el accesorio B");
+    aCant[1] = aCant[1] + 1;
+    accesoriosAgregados.push(accesorio2);
+    //agregaAcc = prompt("Desea agregar otro accesorio? Escriba S ó N");
+  } else if (_tipoAcce == "Rueda") {
+    console.log("Ha seleccionado el accesorio C");
+    aCant[2] = aCant[2] + 1;
+    accesoriosAgregados.push(accesorio3);
+    //agregaAcc = prompt("Desea agregar otro accesorio? Escriba S ó N");
+  } else {
+    alert("Entrada inválida"); //*El accesorio seleccionado no existe
+    console.log("Selección de accesorio invalida");
+    agregaAcc = ""; //*fuerza la salida del bucle al ingreso de opción incorrecta
   }
+  //}
+  tipoAcce(aCant); //determina los tipos de accesorios definidos
+  listaAcceAgregados(_tipoAcce); //muestra accesorios seleccionados en HTML
+  //} else if (agregaAcc == "N") {
+  //*Si no se desea agregar accesorios
+  //alert("No agregó accesorios!");
+  //  console.log("No agrega accesorios");
+  //}
+  //Si se ingresa una opción incorrecta
+  //else {
+  //  alert("Opción incorrecta, no agrega accesorios!"); //*Si la respuesta no es S o N
+  //}
+  //}
   //*No se puede agregar accesorios porque no hay productos validados
-  else {
-    alert("No se pueden agregar accesorios!!!");
-  }
+  //else {
+  //  alert("No se pueden agregar accesorios!!!");
+  //}
   //se muestra por consola la cantidad de cada accesorio seleccionado
   console.log("Accesorios del tipo A seleccionados: " + aCant[0]);
   console.log("Accesorios del tipo B seleccionados: " + aCant[1]);
@@ -325,8 +364,8 @@ function costoTotal(_producto) {
 }
 
 //*Ejecución del programa
-armarListaProd();
-armarListaAcce();
+//armarListaProd();
+//armarListaAcce();
 //validacion((producto = seleccion()));
 //cantidad(valido);
 //definAcc(cantProd);

@@ -99,3 +99,10 @@ a {
   font: size 20px;
   margin: 5px;
 }
+
+.lista__accesorios--botonAgregar {
+  color: rgb(199, 19, 79);
+  background-color: rgb(197, 166, 107);
+  font: size 20px;
+  margin: 5px;
+}
